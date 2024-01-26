@@ -9,7 +9,7 @@ body {
 #calc {
     margin: 20px auto;
     width: 300px;
-    height: 440px;
+    height: 400px;
     background-color: rgb(57, 57, 57);
     border-radius: 20px;
     padding: 40px 24px;
@@ -34,20 +34,21 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    gap: 10px;
-    height: 320px;
-    width: 250px;
+    gap: 12px;
+    height: 260px;
+    width: 260px;
     margin-top: 50px;
 
 }
 
 #buttons div {
-    height: 64px;
-    width: 64px;
+    height: 52px;
+    width: 52px;
     background-color: rgb(158, 158, 158);
     border-radius: 10px;
     font-size: 36px;
     font-weight: 500;
+    border: 1px solid darkgrey;
     color: bisque;
     display: flex;
     align-items: center;
@@ -58,6 +59,7 @@ div#clearKey {
     background-color: rgb(98, 195, 163);
 }
 
-div#equalsKey {
+div#equalsKey, 
+#buttons div.operatorKey {
     background-color:rgb(233, 117, 74);
 }
