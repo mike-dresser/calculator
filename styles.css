@@ -53,9 +53,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: default;
 }
 
-div#clearKey {
+#buttons div.clearKey {
     background-color: rgb(98, 195, 163);
 }
 
