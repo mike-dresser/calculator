@@ -40,6 +40,11 @@ screen.textContent = mem.a; // Initial display on page load
 const buttons = document.querySelector('#buttons');
 
 function display(value) {
+    const testDecimal = String(value).split('.');
+    if (testDecimal.length > 1 && testDecimal[1].length > 4) {
+        value = value.toFixed(4)
+    }
+    if (value === Infinity) value = '😈';
     screen.textContent = value;
 }
 
