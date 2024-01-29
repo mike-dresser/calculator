@@ -29,23 +29,36 @@ function operate(a, b, operator) {
     }
 }
 
+function calculate(operator) {
+    
+}
+
 const mem = {
     input: [],
     a: 0,
     b: 0,
     operator: null,
 }
-const screen = document.querySelector('#screen');
-screen.textContent = mem.a; // Initial display on page load
+const valueDisplay = document.querySelector('#valueDisplay');
+const operatorDisplay = document.querySelector('#operatorDisplay');
+valueDisplay.textContent = mem.a; // Initial display on page load
 const buttons = document.querySelector('#buttons');
 
 function display(value) {
+    // Reduce font size based on number of characters
+    const testLength = String(value).length;
+    valueDisplay.classList.remove('small', 'smaller');
+    if (testLength > 6) valueDisplay.classList.add('small');
+    if (testLength > 9) valueDisplay.classList.add('smaller');
     const testDecimal = String(value).split('.');
-    if (testDecimal.length > 1 && testDecimal[1].length > 4) {
-        value = value.toFixed(4)
+    // Max number of decimal places
+    if (testDecimal.length > 1 && testDecimal[1].length > 4) {  
+        value = value.toFixed(4)            
     }
+    // Switch to scientific notation at hard length limit
+    if (testLength > 13) value = value.toExponential(4);
     if (value === Infinity) value = '😈';
-    screen.textContent = value;
+    valueDisplay.textContent = value;
 }
 
 function clear() {
@@ -54,6 +67,7 @@ function clear() {
     mem.b = 0;
     mem.operator = null;
     display(mem.a);
+    operatorDisplay.textContent = '';
 }
 
 buttons.addEventListener('click', event => {
@@ -69,6 +83,7 @@ buttons.addEventListener('click', event => {
     if (event.target.classList.contains('operatorKey')) {
         // Second operator press (effectively an "=", i.e. "2 + 5 +").
         // Concatenate second input string, calculate with operate()
+        operatorDisplay.textContent = event.target.textContent;
         if (mem.a && mem.input.length > 1) {
             mem.b = Number(mem.input.join(''));
             const result = operate(mem.a, mem.b, mem.operator);
@@ -87,5 +102,4 @@ buttons.addEventListener('click', event => {
             mem.operator = event.target.textContent;
         }
     }
-    console.table(mem);
 })

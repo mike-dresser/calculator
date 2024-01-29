@@ -20,14 +20,22 @@ body {
 
 #screen {
     width: 260px;
-    height: 76px;
+    height: 65px;
     font-size: 54px;
-    text-align: right;
     color: rgb(44, 43, 43);
-    padding-right: 10px;
-    padding-bottom: 6px;
     background-color: rgb(159, 185, 206);
     border-radius: 14px;
+    padding: 10px;
+    display:flex;
+    justify-content: space-between;
+}
+
+#screen div.small {
+    font-size: 40px;
+}
+
+#screen div.smaller {
+    font-size: 26px;
 }
 
 #buttons {
