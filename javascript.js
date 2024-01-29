@@ -30,18 +30,40 @@ function operate(a, b, operator) {
 }
 
 function calculate(operator) {
-    
+    if (mem.a && mem.input.length > 1) {
+        mem.b = Number(mem.input.join(''));
+        const result = operate(mem.a, mem.b, mem.operator);
+
+        display(result);
+
+        // Move result to mem.a, zero out the rest
+        mem.a = result;
+        mem.b = 0;
+        mem.operator = operator;
+        mem.input = [0];
+    } else {
+        // mem.a either exists from previous calculation, or is set
+        mem.a = mem.a ? mem.a : Number(mem.input.join(''));
+        mem.input = [0];
+        mem.operator = operator;
+    }
 }
 
+// Global object to hold an input buffer (individual digits in an array
+// joined and cast to a number for display / calculation), the first value for 
+// calculation (a), the second value (b), and the operator
+// 
 const mem = {
     input: [],
     a: 0,
     b: 0,
     operator: null,
 }
+
+
 const valueDisplay = document.querySelector('#valueDisplay');
 const operatorDisplay = document.querySelector('#operatorDisplay');
-valueDisplay.textContent = mem.a; // Initial display on page load
+valueDisplay.textContent = mem.a; // Initial display '0' on page load
 const buttons = document.querySelector('#buttons');
 
 function display(value) {
@@ -50,8 +72,8 @@ function display(value) {
     valueDisplay.classList.remove('small', 'smaller');
     if (testLength > 6) valueDisplay.classList.add('small');
     if (testLength > 9) valueDisplay.classList.add('smaller');
-    const testDecimal = String(value).split('.');
     // Max number of decimal places
+    const testDecimal = String(value).split('.');
     if (testDecimal.length > 1 && testDecimal[1].length > 4) {  
         value = value.toFixed(4)            
     }
@@ -83,23 +105,9 @@ buttons.addEventListener('click', event => {
     if (event.target.classList.contains('operatorKey')) {
         // Second operator press (effectively an "=", i.e. "2 + 5 +").
         // Concatenate second input string, calculate with operate()
-        operatorDisplay.textContent = event.target.textContent;
-        if (mem.a && mem.input.length > 1) {
-            mem.b = Number(mem.input.join(''));
-            const result = operate(mem.a, mem.b, mem.operator);
-
-            display(result);
-
-            // Move result to mem.a, zero out the rest
-            mem.a = result;
-            mem.b = 0;
-            mem.operator = event.target.textContent;
-            mem.input = [0];
-        } else {
-            // mem.a either exists from previous calculation, or is set
-            mem.a = mem.a ? mem.a : Number(mem.input.join(''));
-            mem.input = [0];
-            mem.operator = event.target.textContent;
-        }
+        const operator = event.target.textContent
+        operatorDisplay.textContent = operator;
+        calculate(operator);
+       
     }
 })
